@@ -28,7 +28,7 @@ public class BaseTest {
 
         System.out.println("✅ Framework Initialized with Base URI: " + RestAssured.baseURI);
 
-        ExtentSparkReporter sparkReporter = new ExtentSparkReporter("target/ExtentReport.html");
+        ExtentSparkReporter sparkReporter = new ExtentSparkReporter("Extend_Report/ExtentReport.html");
         extent.attachReporter(sparkReporter);
         extent.setSystemInfo("Framework", "RestAssured with TestNG");
 
