@@ -1,12 +1,8 @@
-# API Automation Framework – Rest Assured + TestNG
+# API Automation Framework – Rest Assured + TestNG + Extend Report
 
 This is a modular and scalable API automation framework built using **Rest Assured**, **TestNG**, **Extent Reports**, and reusable utility components. It is designed to automate API testing for RESTful services, support dynamic data, and provide structured test execution reports.
 
----
 
-## Classification: Public
-
----
 
 ## 🚀 Technologies Used
 
@@ -49,34 +45,54 @@ This is a modular and scalable API automation framework built using **Rest Assur
 ## 🗂 Project Structure
 
 
-API_Automation_Assignment/
-├── src/
-│   └── test/
-│       ├── java/
-│       │   ├── base/
-│       │   │   ├── BaseTest.java (Base test class)
-│       │   │   └── Configuration.java (Configuration class)
-│       │   ├── tests/
-│       │   │   └── OurPartnersAPITest.java (API test class)
-│       │   └── utils/
-│       │       ├── ConfigReader.java (Utility for reading config)
-│       │       ├── RetryAnalyzer.java (Test retry logic)
-│       │       └── TestDataUtil.java (Test data utility)
-│       └── resources/
-│           └── config.properties (Configuration file)
-├── target/
-│   ├── classes/ (Compiled main classes)
-│   ├── generated-sources/ (Auto-generated sources)
-│   ├── generated-test-sources/ (Auto-generated test sources)
-│   ├── test-classes/ (Compiled test classes)
-│   └── ExtentReport.html (Test report)
-├── README.md (Project documentation)
-├── testing.xml (Test configuration)
-├── .gitignore (Git ignore rules)
-└── pom.xml (Maven project configuration)
+# API Automation Assignment Project Structure
 
+```
+**API_Automation_Assignment/
+- .idea/                          # IDE configuration files (IntelliJ)
+- Extend_Report/
+  - ExtentReport.html             # Test execution report
+- src/
+  - main/
+    - java/                       # Main Java source code
+  - test/
+    - java/
+      - base/
+        - BaseTest.java           # Base test class
+      - tests/
+        - OurPartnersAPiTest.java # API test cases
+      - utils/
+        - ConfigReader.java       # Configuration utility
+        - RetryAnalyzer.java       # Test retry logic
+        - TestDataUtil.java        # Test data generator
+  - resources/
+    - config.properties           # Configuration settings
+    - testing.xml                 # Test configuration
+- target/                        # Compiled classes and build output
+- .gitignore                     # Specifies untracked files to ignore
+- pom.xml                        # Maven project configuration
+- README.md                      # Project documentation**
+```
 
----
+### Key Components
+- **`src/test/java/base/`**: Contains the base test class for common setup/teardown.
+- **`src/test/java/tests/`**: Holds API test implementations (e.g., `OurPartnersAPiTest`).
+- **`src/test/java/utils/`**: Utilities for configuration, retry logic, and test data.
+- **`Extend_Report/`**: Generated HTML report for test results.
+
+### Setup Instructions
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   ```
+2. **Build the project** (Maven):
+   ```bash
+   mvn clean install
+   ```
+3. **Run tests**:
+   ```bash
+   mvn test
+   ```
 
 ## 🛠️ Setup Instructions
 
