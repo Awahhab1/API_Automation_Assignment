@@ -67,7 +67,7 @@ public class OurPartnersAPITest extends BaseTest {
     @Test(priority = 1,retryAnalyzer = RetryAnalyzer.class)
     public void testValidRequest() {
 
-        test = extent.createTest("Request with Valid credentials ","OurPartners API Test with Valid Request ");
+        test = extent.createTest("Request with Valid credentials ", "OurPartners API Test with Valid Request ");
         test.info("Sending valid request to create a new partner");
         // Define the payload with the unique email and phone number
         String payload = "{\n" +
@@ -80,29 +80,26 @@ public class OurPartnersAPITest extends BaseTest {
         test.info("Request Payload:\n" + payload);
 
 
-        try {
-            test.info("Sending POST request to /our-partners");
+        test.info("Sending POST request to /our-partners");
 
-            Response response = given()
-                    .contentType(ContentType.JSON)
-                    .body(payload)
-                    .log().all() // Logs to console
-                    .when()
-                    .post("/our-partners");
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .body(payload)
+                .log().all() // Logs to console
+                .when()
+                .post("/our-partners");
 
-            test.info("Response Status Code: " + response.getStatusCode());
-            test.info("Response Body:\n" + response.getBody().asPrettyString());
+        test.info("Response Status Code: " + response.getStatusCode());
+        test.info("Response Body:\n" + response.getBody().asPrettyString());
 
-            response.then().statusCode(200);
+        response.then().statusCode(200);
 
-            test.pass("✅ Valid request sent successfully and response is as expected.");
-
-        } catch (AssertionError | Exception e) {
-            test.fail("❌ Test failed: " + e.getMessage());
-            throw e;
-        }
+        test.pass("✅ Valid request sent successfully and response is as expected.");
 
     }
+
+
+
 
     @Test(priority = 2,retryAnalyzer = RetryAnalyzer.class)
     public void testMissingPhoneField() {
@@ -116,6 +113,7 @@ public class OurPartnersAPITest extends BaseTest {
                 "\"companyName\": \"" + companyName + "\",\n" +
                 "\"strategicGoals\": \"" + strategicGoals + "\"\n" +
                 "}";
+        test.info("Request Payload:\n" + payload);
 
         // Send the POST request and capture the response
         Response response = given()
@@ -125,8 +123,11 @@ public class OurPartnersAPITest extends BaseTest {
                 .when()
                 .post("/our-partners");
 
+
         // Log the response
         response.then().log().all();
+        test.info("Response Status Code: " + response.getStatusCode());
+        test.info("Response Body:\n" + response.getBody().asPrettyString());
 
         // Validate the response status code and message using TestNG Assert
         Assert.assertEquals(response.getStatusCode(), 400, "Status code mismatch, expected 400.");
@@ -148,6 +149,7 @@ public class OurPartnersAPITest extends BaseTest {
                 "\"companyName\": \"" + companyName + "\",\n" +
                 "\"strategicGoals\": \"" + strategicGoals + "\"\n" +
                 "}";
+        test.info("Request Payload:\n" + payload);
 
         // Send the POST request and capture the response
         Response response = given()
@@ -159,6 +161,8 @@ public class OurPartnersAPITest extends BaseTest {
 
         // Log the response
         response.then().log().all();
+        test.info("Response Status Code: " + response.getStatusCode());
+        test.info("Response Body:\n" + response.getBody().asPrettyString());
 
         // Validate the response status code and message using TestNG Assert
         Assert.assertEquals(response.getStatusCode(), 400, "Status code mismatch, expected 400.");
@@ -176,6 +180,7 @@ public class OurPartnersAPITest extends BaseTest {
                 "\"companyName\": \"" + companyName + "\",\n" +
                 "\"strategicGoals\": \"" + strategicGoals + "\"\n" +
                 "}";
+        test.info("Request Payload:\n" + payload);
 
         // Send the POST request and capture the response
         Response response = given()
@@ -184,9 +189,12 @@ public class OurPartnersAPITest extends BaseTest {
                 .log().all()
                 .when()
                 .post("/our-partners");
+        test.info("Request Payload:\n" + payload);
 
         // Log the response
         response.then().log().all();
+        test.info("Response Status Code: " + response.getStatusCode());
+        test.info("Response Body:\n" + response.getBody().asPrettyString());
 
         // Validate the response status code and message using TestNG Assert
         Assert.assertEquals(response.getStatusCode(), 400, "Status code mismatch, expected 400.");
@@ -204,6 +212,7 @@ public class OurPartnersAPITest extends BaseTest {
                 "\"companyName\": \"" + companyName + "\",\n" +
                 "\"strategicGoals\": \"" + strategicGoals + "\"\n" +
                 "}";
+        test.info("Request Payload:\n" + payload);
 
         // Send the POST request and capture the response
         Response response = given()
@@ -215,6 +224,8 @@ public class OurPartnersAPITest extends BaseTest {
 
         // Log the response
         response.then().log().all();
+        test.info("Response Status Code: " + response.getStatusCode());
+        test.info("Response Body:\n" + response.getBody().asPrettyString());
 
         // Validate the response status code and message using TestNG Assert
         Assert.assertEquals(response.getStatusCode(), 400, "Status code mismatch, expected 400.");
@@ -232,6 +243,7 @@ public class OurPartnersAPITest extends BaseTest {
                 "\"companyName\": \"" + companyName + "\",\n" +
                 "\"strategicGoals\": \"" + strategicGoals + "\"\n" +
                 "}";
+        test.info("Request Payload:\n" + payload);
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -242,6 +254,8 @@ public class OurPartnersAPITest extends BaseTest {
 
         // Log the response
         response.then().log().all();
+        test.info("Response Status Code: " + response.getStatusCode());
+        test.info("Response Body:\n" + response.getBody().asPrettyString());
 
         // Validate the response status code and message using TestNG Assert
         Assert.assertEquals(response.jsonPath().getString("message"), "email_already_exists", "Error message doesn't match expected value.");
@@ -258,6 +272,7 @@ public class OurPartnersAPITest extends BaseTest {
                 "\"companyName\": \"" + companyName + "\",\n" +
                 "\"strategicGoals\": \"" + strategicGoals + "\"\n" +
                 "}";
+        test.info("Request Payload:\n" + payload);
 
         RestAssured.given()
                 .contentType(ContentType.JSON)
@@ -268,6 +283,7 @@ public class OurPartnersAPITest extends BaseTest {
                 .then()
                 .log().all()
                 .time(lessThan(5000L));  // Ensure response time is under 5000 ms
+
         test.pass("Response time is within 5 seconds");
     }
 
@@ -281,6 +297,7 @@ public class OurPartnersAPITest extends BaseTest {
                 "\"companyName\": \"" + companyName + "\",\n" +
                 "\"strategicGoals\": \"" + strategicGoals + "\"\n" +
                 "}";
+        test.info("Request Payload:\n" + payload);
 
         RestAssured.given()
                 .contentType(ContentType.JSON)
@@ -306,6 +323,7 @@ public class OurPartnersAPITest extends BaseTest {
                 "\"companyName\": \"" + companyName + "\",\n" +
                 "\"strategicGoals\": \"" + strategicGoals + "\"\n" +
                 "}";
+        test.info("Request Payload:\n" + payload);
 
         RestAssured.given()
                 .contentType(ContentType.JSON)
@@ -329,6 +347,7 @@ public class OurPartnersAPITest extends BaseTest {
                 "\"companyName\": \"" + companyName + "\",\n" +
                 "\"strategicGoals\": \"" + strategicGoals + "\"\n" +
                 "}";
+        test.info("Request Payload:\n" + payload);
 
         Response response = RestAssured.given()
                 .contentType(ContentType.JSON)
@@ -355,6 +374,7 @@ public class OurPartnersAPITest extends BaseTest {
                 "\"companyName\": \"" + companyName + "\",\n" +
                 "\"strategicGoals\": \"" + strategicGoals + "\"\n" +
                 "}";
+        test.info("Request Payload:\n" + payload);
 
         RestAssured.given()
                 .contentType(ContentType.JSON)
@@ -380,6 +400,7 @@ public class OurPartnersAPITest extends BaseTest {
                 "\"companyName\": \"" + companyName + "\",\n" +
                 "\"strategicGoals\": \"" + strategicGoals + "\"\n" +
                 "}";
+        test.info("Request Payload:\n" + payload);
 
         RestAssured.given()
                 .contentType(ContentType.JSON)
@@ -393,15 +414,6 @@ public class OurPartnersAPITest extends BaseTest {
                 .statusCode(200);  // Should be successful; API should ignore irrelevant query parameters
         test.pass("Handled unnecessary query params without issues");
     }
-
-
-
-
-
-
-
-
-
 
 
 }
