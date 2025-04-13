@@ -14,9 +14,13 @@ public class BaseTest {
     public static ExtentReports extent=new ExtentReports();
     @BeforeSuite
     public void setUpSuite() {
-        //System.out.println("✅ [BeforeSuite] RestAssured.baseURI = " + RestAssured.baseURI);
-        // Load base URI from properties
+
+        // Create a test entry for the setup process
+        test = extent.createTest("Framework Initialization");
+
+
         RestAssured.baseURI = ConfigReader.getProperty("base.url");
+        test.info("Base URI set to: " + RestAssured.baseURI);
 
         // Configure global timeout
         RestAssured.config = RestAssuredConfig.config().httpClient(
@@ -25,21 +29,22 @@ public class BaseTest {
                         .setParam("http.socket.timeout", 5000)
                         .setParam("http.connection-manager.timeout", 5000)
         );
+        test.info("Timeouts configured: connection, socket, and connection-manager set to 5000ms");
 
-        System.out.println("✅ Framework Initialized with Base URI: " + RestAssured.baseURI);
+       // System.out.println(" Framework Initialized with Base URI: " + RestAssured.baseURI);
 
         ExtentSparkReporter sparkReporter = new ExtentSparkReporter("Extend_Report/ExtentReport.html");
         extent.attachReporter(sparkReporter);
         extent.setSystemInfo("Framework", "RestAssured with TestNG");
 
-        System.out.println("✅ Extent Report Initialized");
+        test.pass("✅ Framework Initialized Successfully");
     }
 
     @AfterSuite
     public void tearDownSuite() {
         if (extent != null) {
             extent.flush();
-            System.out.println("✅ Extent Report Flushed");
+            test.info("Flushing Extent Report...");
         }
     }
 }

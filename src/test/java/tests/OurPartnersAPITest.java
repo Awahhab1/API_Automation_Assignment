@@ -2,8 +2,7 @@ package tests;
 
 import base.BaseTest;
 import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -65,7 +64,7 @@ public class OurPartnersAPITest extends BaseTest {
     }
 
 
-    @Test
+    @Test(priority = 1,retryAnalyzer = RetryAnalyzer.class)
     public void testValidRequest() {
 
         test = extent.createTest("Request with Valid credentials ","OurPartners API Test with Valid Request ");
@@ -78,22 +77,34 @@ public class OurPartnersAPITest extends BaseTest {
                 "\"companyName\": \"" + companyName + "\",\n" +
                 "\"strategicGoals\": \"" + strategicGoals + "\"\n" +
                 "}";
+        test.info("Request Payload:\n" + payload);
 
-        given()
-                .contentType(ContentType.JSON)
-                .body(payload)
-                .log().all() // Log the request
-                .when()
-                .post("/our-partners")
-                .then()
-                .log().all()  // Log the response
-                .statusCode(200);  // Validate status code for successful creation
 
-        test.pass("Valid request sent successfully and response is as expected.");
+        try {
+            test.info("Sending POST request to /our-partners");
+
+            Response response = given()
+                    .contentType(ContentType.JSON)
+                    .body(payload)
+                    .log().all() // Logs to console
+                    .when()
+                    .post("/our-partners");
+
+            test.info("Response Status Code: " + response.getStatusCode());
+            test.info("Response Body:\n" + response.getBody().asPrettyString());
+
+            response.then().statusCode(200);
+
+            test.pass("✅ Valid request sent successfully and response is as expected.");
+
+        } catch (AssertionError | Exception e) {
+            test.fail("❌ Test failed: " + e.getMessage());
+            throw e;
+        }
 
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
+    @Test(priority = 2,retryAnalyzer = RetryAnalyzer.class)
     public void testMissingPhoneField() {
         test = extent.createTest("Missing phone Field", "Missing phone in payload");
 
@@ -124,7 +135,7 @@ public class OurPartnersAPITest extends BaseTest {
 
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
+    @Test(priority = 3,retryAnalyzer = RetryAnalyzer.class)
     public void testMissingEmailField() {
 
         test = extent.createTest("Missing Email Field", "Missing email in payload");
@@ -155,7 +166,7 @@ public class OurPartnersAPITest extends BaseTest {
         test.pass("Error correctly returned for missing email");
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
+    @Test(priority = 4,retryAnalyzer = RetryAnalyzer.class)
     public void testInvalidEmailFormat() {
         test = extent.createTest("Invalid Email Format", "Using badly formatted email");
         String payload = "{\n" +
@@ -183,7 +194,7 @@ public class OurPartnersAPITest extends BaseTest {
         test.pass("Correct error shown for invalid email format");
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
+    @Test(priority = 5,retryAnalyzer = RetryAnalyzer.class)
     public void testInvalidPhoneFormat() {
         test = extent.createTest("Invalid Phone Format", "Using invalid phone number");
         String payload = "{\n" +
@@ -211,7 +222,7 @@ public class OurPartnersAPITest extends BaseTest {
         test.pass("Correct error returned for invalid phone number");
     }
 
-    @Test
+    @Test(priority = 6,retryAnalyzer = RetryAnalyzer.class)
     public void testDuplicateEmail() {
         test = extent.createTest("Duplicate Email", "Email already exists scenario");
         String payload = "{\n" +
@@ -237,7 +248,7 @@ public class OurPartnersAPITest extends BaseTest {
         test.pass("Proper message returned for duplicate email");
     }
 
-    @Test
+    @Test(priority = 7,retryAnalyzer = RetryAnalyzer.class)
     public void testResponseTime() {
         test = extent.createTest("Response Time Test", "Verifying response time under 5 seconds");
         String payload = "{\n" +
@@ -260,7 +271,7 @@ public class OurPartnersAPITest extends BaseTest {
         test.pass("Response time is within 5 seconds");
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
+    @Test(priority = 8,retryAnalyzer = RetryAnalyzer.class)
     public void testInvalidEndpoint() {
         test = extent.createTest("Invalid Endpoint", "Hitting a non-existing endpoint");
         String payload = "{\n" +
@@ -283,7 +294,7 @@ public class OurPartnersAPITest extends BaseTest {
         test.pass("Correctly handled invalid endpoint");
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
+    @Test(priority = 9,retryAnalyzer = RetryAnalyzer.class)
     public void testSpecialCharactersInFields() {
 
         test = extent.createTest("Special Characters in Name", "Handling special characters in name field");
@@ -308,7 +319,7 @@ public class OurPartnersAPITest extends BaseTest {
         test.pass("Special characters handled successfully");
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
+    @Test(priority = 10,retryAnalyzer = RetryAnalyzer.class)
     public void testPhoneNumberWithNonNumericCharacters() {
         test = extent.createTest("Alphanumeric Phone", "Testing phone number with letters");
         String payload = "{\n" +
@@ -334,7 +345,7 @@ public class OurPartnersAPITest extends BaseTest {
         test.pass("Error correctly returned for alphanumeric phone");
 
     }
-    @Test(retryAnalyzer = RetryAnalyzer.class)
+    @Test(priority = 11,retryAnalyzer = RetryAnalyzer.class)
     public void testPhoneNumberFormatInconsistency() {
         test = extent.createTest("Inconsistent Phone Format", "Phone number with incorrect format");
         String payload = "{\n" +
@@ -358,7 +369,7 @@ public class OurPartnersAPITest extends BaseTest {
         test.pass("Phone format inconsistency handled correctly");
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
+    @Test(priority = 12,retryAnalyzer = RetryAnalyzer.class)
     public void testQueryParametersWithUnnecessaryData() {
         test = extent.createTest("Unnecessary Query Param", "Testing irrelevant query params");
 
